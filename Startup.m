@@ -41,3 +41,4 @@ end
 
 disp('- Rutas configuradas correctamente (ignorando /cache y datos crudos).');
 disp('¡Entorno listo para trabajar!');
+
