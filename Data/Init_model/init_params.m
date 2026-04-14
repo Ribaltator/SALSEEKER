@@ -38,12 +38,22 @@ dSection=getSection(dictObj, 'Design Data');
 m_mass=8;
 m_pos_init=[0; 0; 0];
 m_vel_init=[300; 0; 0];
-m_angle_init=[0; pi/4; 0];
+m_angle_init=[0; pi/8; 0];
 
 assignin(dSection, 'm_mass', m_mass);
 assignin(dSection, 'm_pos_init', m_pos_init);
 assignin(dSection, 'm_vel_init', m_vel_init);
 assignin(dSection, 'm_angle_init', m_angle_init);
+saveChanges(dictObj);
+
+%% Control
+
+dictObj=Simulink.data.dictionary.open('Control_data.sldd');
+dSection=getSection(dictObj, 'Design Data');
+
+control_threshold = 1e-5;
+
+assignin(dSection, 'control_threshold', control_threshold);
 saveChanges(dictObj);
 
 %% Seeker
@@ -79,7 +89,7 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [2.537049780036680e+03,-4.590547723396396e-14,0.020997040182357];
+t_geo        = [2500,0,0];
 t_rotation   = 0;
 t_size       = [6.4,2.3,2.3];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
