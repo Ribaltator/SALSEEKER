@@ -89,7 +89,7 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [2800,0,0];
+t_geo        = [3000,0,0];
 t_rotation   = 0;
 t_size       = [6.4,2.3,2.3];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
