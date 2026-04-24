@@ -4,23 +4,24 @@ clear all
 dictObj     = Simulink.data.dictionary.open('Environment_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-e_vel_wind=0;
-e_theta_wind=90;
+e_vel_wind      = 0;
+e_theta_wind    = 90;
 
 assignin(dSection, 'e_vel_wind', e_vel_wind);
 assignin(dSection, 'e_theta_wind', e_theta_wind);
+saveChanges(dictObj);
 
 %% Aerodynamics
 
 dictObj     = Simulink.data.dictionary.open('Aerodynamic_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-a_coef_body= [0.2 0 0 0 0 0];
-a_cg=[0 0 0];
-a_cp=[0 0 0];
-a_surface_ref=pi*0.1^2;
-a_span_ref=0;
-a_length_ref=0.5;
+a_coef_body     = [0.2 0 0 0 0 0];
+a_cg            = [0 0 0];
+a_cp            = [0 0 0];
+a_surface_ref   = pi*0.1^2;
+a_span_ref      = 0;
+a_length_ref    = 0.5;
 
 assignin(dSection, 'a_coef_body', a_coef_body);
 assignin(dSection, 'a_cg', a_cg);
@@ -32,13 +33,13 @@ saveChanges(dictObj);
 
 %% Missile
 
-dictObj=Simulink.data.dictionary.open('Main_data.sldd');
-dSection=getSection(dictObj, 'Design Data');
+dictObj     = Simulink.data.dictionary.open('Main_data.sldd');
+dSection    = getSection(dictObj, 'Design Data');
 
-m_mass=8;
-m_pos_init=[0; 0; 0];
-m_vel_init=[300; 0; 0];
-m_angle_init=[0; pi/8; 0];
+m_mass          = 8;
+m_pos_init      = [0; 0; 0];
+m_vel_init      = [300; 0; 0];
+m_angle_init    = [0; pi/8; 0];
 
 assignin(dSection, 'm_mass', m_mass);
 assignin(dSection, 'm_pos_init', m_pos_init);
@@ -51,9 +52,9 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-control_threshold = 1e-5;
+impact_angle        = pi/4;
 
-assignin(dSection, 'control_threshold', control_threshold);
+assignin(dSection, 'impact_angle', impact_angle);
 saveChanges(dictObj);
 
 %% Seeker
@@ -61,20 +62,27 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Seeker_detect_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-s_geo                    = [0;0;100];
-s_orientation            = [0 -0.7796];
-s_fov                    = 0.079;
-s_aperture_diameter      = 0.06;
-s_efficiency             = 0.95;
-% s_background             = 0.01;
-% s_signalnoise_threshold  = 7;
+s_geo                        = [0;0;100];
+s_fov                        = pi/18;
+s_aperture_diameter          = 0.06;
+s_efficiency                 = 0.95;
+s_focal_distance             = 2e-3;
+s_ratio_gain                 = 1/(2*pi/180);
+s_energy_threshold           = 10e-5;
+% s_background               = 0.01;
+% s_signalnoise_threshold    = 7;
 
 assignin(dSection, 's_geo', s_geo);
-assignin(dSection, 's_orientation', s_orientation);
 assignin(dSection, 's_fov', s_fov);
 assignin(dSection, 's_aperture_diameter', s_aperture_diameter);
 assignin(dSection, 's_efficiency', s_efficiency);
+assignin(dSection, 's_focal_distance', s_focal_distance);
+assignin(dSection, 's_ratio_gain', s_ratio_gain);
+assignin(dSection, 's_energy_threshold', s_energy_threshold);
+
 saveChanges(dictObj);
+
+%% Gimbal
 
 dictObj=Simulink.data.dictionary.open('Gimbal_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
