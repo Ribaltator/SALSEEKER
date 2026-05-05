@@ -53,8 +53,15 @@ dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
 impact_angle        = pi/4;
+Control_switch      = 1;% 0 for Pure Pursuit; 1 for Proportional Guidance.
+Navigation_constant = 3;% Only for Proportional Guidance.
+Approach_velocity   = 250;% Only for Proportional Guidance.
 
 assignin(dSection, 'impact_angle', impact_angle);
+assignin(dSection, 'Control_switch', Control_switch);
+assignin(dSection, 'Navigation_constant', Navigation_constant);
+assignin(dSection, 'Approach_velocity', Approach_velocity);
+
 saveChanges(dictObj);
 
 %% Seeker
@@ -66,8 +73,6 @@ s_geo                        = [0;0;100];
 s_fov                        = pi/18;
 s_aperture_diameter          = 0.06;
 s_efficiency                 = 0.95;
-s_focal_distance             = 2e-3;
-s_ratio_gain                 = 1/(2*pi/180);
 s_energy_threshold           = 10e-5;
 % s_background               = 0.01;
 % s_signalnoise_threshold    = 7;
@@ -76,8 +81,6 @@ assignin(dSection, 's_geo', s_geo);
 assignin(dSection, 's_fov', s_fov);
 assignin(dSection, 's_aperture_diameter', s_aperture_diameter);
 assignin(dSection, 's_efficiency', s_efficiency);
-assignin(dSection, 's_focal_distance', s_focal_distance);
-assignin(dSection, 's_ratio_gain', s_ratio_gain);
 assignin(dSection, 's_energy_threshold', s_energy_threshold);
 
 saveChanges(dictObj);
@@ -99,7 +102,7 @@ dSection    = getSection(dictObj, 'Design Data');
 
 t_geo        = [3000,0,0];
 t_rotation   = 0;
-t_size       = [6.4,2.3,2.3];
+t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
 assignin(dSection, 't_geo', t_geo);
