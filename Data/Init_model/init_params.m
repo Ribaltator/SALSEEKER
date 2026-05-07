@@ -36,8 +36,8 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Main_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-m_mass          = 8;
-m_pos_init      = [0; 0; 0];
+m_mass          = 20;
+m_pos_init      = [0; 0; 0];%  Up is -Z
 m_vel_init      = [300; 0; 0];
 m_angle_init    = [0; pi/8; 0];
 
@@ -53,7 +53,7 @@ dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
 impact_angle        = pi/4;
-Control_switch      = 1;% 0 for Pure Pursuit; 1 for Proportional Guidance.
+Control_switch      = 0;% 0 for Pure Pursuit; 1 for Proportional Guidance.
 Navigation_constant = 3;% Only for Proportional Guidance.
 Approach_velocity   = 250;% Only for Proportional Guidance.
 
@@ -100,13 +100,15 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [3000,0,0];
+t_geo        = [3500,0,0];
 t_rotation   = 0;
+t_velocity   = [60,2,0];
 t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
 assignin(dSection, 't_geo', t_geo);
 assignin(dSection, 't_rotation', t_rotation);
+assignin(dSection, 't_velocity', t_velocity);
 assignin(dSection, 't_size', t_size);
 assignin(dSection, 't_reflect', t_reflect);
 saveChanges(dictObj);
