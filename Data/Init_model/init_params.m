@@ -52,11 +52,15 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-impact_angle        = pi/4;
-Control_switch      = 1;% 0 for Pure Pursuit; 1 for Proportional Guidance.
+Control_phasing_power_threshold     = 5e-3;
+Phasing_switch                      = 1;% 0 for deactivated; 1 for activated.
+Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
+Control_saturation_power_threshold  = 0.2;
 
-assignin(dSection, 'impact_angle', impact_angle);
+assignin(dSection, 'Control_phasing_power_threshold', Control_phasing_power_threshold);
+assignin(dSection, 'Phasing_switch', Phasing_switch);
 assignin(dSection, 'Control_switch', Control_switch);
+assignin(dSection, 'Control_saturation_power_threshold', Control_saturation_power_threshold);
 
 saveChanges(dictObj);
 
@@ -69,7 +73,7 @@ s_geo                        = [0;0;100];
 s_fov                        = pi/18;
 s_aperture_diameter          = 0.06;
 s_efficiency                 = 0.95;
-s_energy_threshold           = 10e-5;
+s_energy_threshold           = 2.5e-4;
 
 assignin(dSection, 's_geo', s_geo);
 assignin(dSection, 's_fov', s_fov);
@@ -94,9 +98,9 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [3000,0,0];
+t_geo        = [3700,0,0];
 t_rotation   = 0;
-t_velocity   = [50,0,0];
+t_velocity   = [0,0,0];
 t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
@@ -116,12 +120,12 @@ d_geo                = [0; 0; 0];
 d_raycount           = 10000;
 d_divergence         = 3e-4;
 d_pulse_energy       = 80e-3;
-d_pulse_frequency    = 10;
+d_pulse_frequency    = 20;
 d_pulse_duration     = 15e-9;
 d_efficiency         = 0.95;
 d_h_error            = randn(1)*1e-4;
 d_v_error            = randn(1)*1e-4;
-sal_atmos_coef  = 0.0001;
+sal_atmos_coef       = 0.0001;
 
 assignin(dSection, 'd_geo', d_geo);
 assignin(dSection, 'd_raycount', d_raycount);
