@@ -52,7 +52,7 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-Control_phasing_power_threshold     = 5e-3;
+Control_phasing_power_threshold     = 22e-4;
 Phasing_switch                      = 1;% 0 for deactivated; 1 for activated.
 Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
 Control_saturation_power_threshold  = 0.2;
@@ -100,7 +100,7 @@ dSection    = getSection(dictObj, 'Design Data');
 
 t_geo        = [3700,0,0];
 t_rotation   = 0;
-t_velocity   = [0,0,0];
+t_velocity   = [35,0,0];
 t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
