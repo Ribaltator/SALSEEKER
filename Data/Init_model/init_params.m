@@ -36,8 +36,8 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Main_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-m_mass          = 8;
-m_pos_init      = [0; 0; 0];
+m_mass          = 20;
+m_pos_init      = [0; 0; 0];%  Up is -Z
 m_vel_init      = [300; 0; 0];
 m_angle_init    = [0; pi/8; 0];
 
@@ -52,9 +52,32 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-impact_angle        = pi/4;
+Control_phasing_power_threshold     = 22e-4;
+Phasing_switch                      = 1;% 0 for deactivated; 1 for activated.
+Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
+Pure_Pursuit_Z_Gain                 = 1400;% Only for Pure Pursuit.
+Pure_Pursuit_Y_Gain                 = 160;% Only for Pure Pursuit.
+Pure_Pursuit_Centered_angle_Z       = 0;% Only for Pure Pursuit.
+Ref_speed                           = 150;% Only for Proportional Guidance.
+Nav_constant                        = 2;% Only for Proportional Guidance without Dynamic Navigation constant.
+Dynamic_Navigation_constant         = 0;% Only for Proportional Guidance: 0 for deactivated; 1 for activated.
+Dynamic_Nav_Gain                    = 0.2;% Only for Proportional Guidance with Dynamic Navigation constant.
+Control_saturation_power_threshold  = 0.2;
+Control_Force_Limit                 = 3000;
 
-assignin(dSection, 'impact_angle', impact_angle);
+assignin(dSection, 'Control_phasing_power_threshold', Control_phasing_power_threshold);
+assignin(dSection, 'Phasing_switch', Phasing_switch);
+assignin(dSection, 'Control_switch', Control_switch);
+assignin(dSection, 'Pure_Pursuit_Z_Gain', Pure_Pursuit_Z_Gain);
+assignin(dSection, 'Pure_Pursuit_Y_Gain', Pure_Pursuit_Y_Gain);
+assignin(dSection, 'Pure_Pursuit_Centered_angle_Z', Pure_Pursuit_Centered_angle_Z);
+assignin(dSection, 'Ref_speed', Ref_speed);
+assignin(dSection, 'Nav_constant', Nav_constant);
+assignin(dSection, 'Dynamic_Navigation_constant', Dynamic_Navigation_constant);
+assignin(dSection, 'Dynamic_Nav_Gain', Dynamic_Nav_Gain);
+assignin(dSection, 'Control_saturation_power_threshold', Control_saturation_power_threshold);
+assignin(dSection, 'Control_Force_Limit', Control_Force_Limit);
+
 saveChanges(dictObj);
 
 %% Seeker
@@ -62,22 +85,14 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Seeker_detect_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-s_geo                        = [0;0;100];
 s_fov                        = pi/18;
 s_aperture_diameter          = 0.06;
 s_efficiency                 = 0.95;
-s_focal_distance             = 2e-3;
-s_ratio_gain                 = 1/(2*pi/180);
-s_energy_threshold           = 10e-5;
-% s_background               = 0.01;
-% s_signalnoise_threshold    = 7;
+s_energy_threshold           = 2.5e-4;
 
-assignin(dSection, 's_geo', s_geo);
 assignin(dSection, 's_fov', s_fov);
 assignin(dSection, 's_aperture_diameter', s_aperture_diameter);
 assignin(dSection, 's_efficiency', s_efficiency);
-assignin(dSection, 's_focal_distance', s_focal_distance);
-assignin(dSection, 's_ratio_gain', s_ratio_gain);
 assignin(dSection, 's_energy_threshold', s_energy_threshold);
 
 saveChanges(dictObj);
@@ -97,13 +112,15 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [3000,0,0];
+t_geo        = [3700,0,0];
 t_rotation   = 0;
-t_size       = [6.4,2.3,2.3];
+t_velocity   = [10,0,0];
+t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
 assignin(dSection, 't_geo', t_geo);
 assignin(dSection, 't_rotation', t_rotation);
+assignin(dSection, 't_velocity', t_velocity);
 assignin(dSection, 't_size', t_size);
 assignin(dSection, 't_reflect', t_reflect);
 saveChanges(dictObj);
@@ -117,12 +134,12 @@ d_geo                = [0; 0; 0];
 d_raycount           = 10000;
 d_divergence         = 3e-4;
 d_pulse_energy       = 80e-3;
-d_pulse_frequency    = 10;
+d_pulse_frequency    = 20;
 d_pulse_duration     = 15e-9;
 d_efficiency         = 0.95;
 d_h_error            = randn(1)*1e-4;
 d_v_error            = randn(1)*1e-4;
-sal_atmos_coef  = 0.0001;
+sal_atmos_coef       = 0.0001;
 
 assignin(dSection, 'd_geo', d_geo);
 assignin(dSection, 'd_raycount', d_raycount);

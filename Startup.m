@@ -1,44 +1,45 @@
-% startup.m - Configuración del entorno del proyecto MATLAB/Simulink
-disp('Iniciando entorno del proyecto...');
+%% Project Startup Script
+disp('Setting up project environment...');
 
-% 1. Definir la ruta raíz del proyecto (donde está este archivo)
-projectRoot = fileparts(mfilename('fullpath'));
-cd(projectRoot); % Asegurar que estamos en el directorio raíz
+proj = matlab.project.rootProject;
+if isempty(proj)
+    warning('This script must be run within an active Simulink Project.');
+    return;
+end
+projectRoot = proj.RootFolder;
 
-% 2. Configurar la carpeta "cache" para los archivos de Simulink
-cacheFolder = fullfile(projectRoot, 'cache');
-
-% Crear la carpeta si no existe
-if ~exist(cacheFolder, 'dir')
+cacheFolder = fullfile(projectRoot, 'Cache');
+if ~isfolder(cacheFolder) 
     mkdir(cacheFolder);
 end
 
-% Redirigir todos los archivos temporales y de compilación de Simulink
 Simulink.fileGenControl('set', ...
     'CacheFolder', cacheFolder, ...
     'CodeGenFolder', cacheFolder, ...
     'createDir', true);
 
-disp('- Archivos temporales de Simulink redirigidos a /cache');
 
-% 3. Añadir el proyecto al Path de MATLAB de forma inteligente
-% genpath genera las rutas de todas las subcarpetas
-p = genpath(projectRoot);
-
-% Añadimos todo al path temporalmente
-addpath(p);
-
-% 4. Limpiar el Path (MUY IMPORTANTE)
-% No queremos que MATLAB busque funciones dentro de la caché, ni en carpetas ocultas
-carpetasIgnoradas = {'.git', 'cache', fullfile('data', 'raw')};
-
-for i = 1:length(carpetasIgnoradas)
-    rutaIgnorada = fullfile(projectRoot, carpetasIgnoradas{i});
-    if exist(rutaIgnorada, 'dir')
-        rmpath(genpath(rutaIgnorada)); % Elimina la carpeta y sus subcarpetas del path
+slddFiles = dir(fullfile(projectRoot, '**', '*.sldd'));
+if isempty(slddFiles)
+    disp(' Warning: .sldd files not found in specified folder');
+else
+    for i = 1:length(slddFiles)
+        dictName = slddFiles(i).name;
+        dictFolder = slddFiles(i).folder;
+        fullFilePath = fullfile(dictFolder, dictName);
+        try
+            Simulink.data.dictionary.open(dictName);
+        catch ME
+            warning('Could not verify dictionary: %s: %s', dictName, ME.message);
+        end
     end
 end
 
-disp('- Rutas configuradas correctamente (ignorando /cache y datos crudos).');
-disp('¡Entorno listo para trabajar!');
 
+Param_route = fullfile(projectRoot, 'Data', 'Init_model', 'init_params.m');
+if isfile(Param_route)
+    run(Param_route);
+    disp('Startup completed')
+else
+    disp('Warning: init_params.m not found');
+end
