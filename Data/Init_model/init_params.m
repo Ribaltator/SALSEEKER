@@ -38,7 +38,7 @@ dSection    = getSection(dictObj, 'Design Data');
 
 m_mass          = 20;
 m_pos_init      = [0; 0; 0];%  Up is -Z
-m_vel_init      = [300; 0; 0];
+m_vel_init      = 300;
 m_angle_init    = [0; pi/8; 0];
 
 assignin(dSection, 'm_mass', m_mass);
@@ -53,7 +53,7 @@ dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
 Control_phasing_power_threshold     = 22e-4;
-Phasing_switch                      = 1;% 0 for deactivated; 1 for activated.
+Phasing_switch                      = 0;% 0 for deactivated; 1 for activated.
 Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
 Pure_Pursuit_Z_Gain                 = 1400;% Only for Pure Pursuit.
 Pure_Pursuit_Y_Gain                 = 160;% Only for Pure Pursuit.
@@ -112,9 +112,9 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [3700,0,0];
+t_geo        = [3600,0,200];
 t_rotation   = 0;
-t_velocity   = [10,0,0];
+t_velocity   = [0,0,0];
 t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
@@ -137,8 +137,8 @@ d_pulse_energy       = 80e-3;
 d_pulse_frequency    = 20;
 d_pulse_duration     = 15e-9;
 d_efficiency         = 0.95;
-d_h_error            = randn(1)*1e-4;
-d_v_error            = randn(1)*1e-4;
+d_h_error            = 0;
+d_v_error            = 0;
 sal_atmos_coef       = 0.0001;
 
 assignin(dSection, 'd_geo', d_geo);
