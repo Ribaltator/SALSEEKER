@@ -30,7 +30,7 @@ dSection    = getSection(dictObj, 'Design Data');
 
 m_mass          = 20;
 m_pos_init      = [0; 0; 0];%  Up is -Z
-m_vel_init      = 300;
+m_vel_init      = 200;
 m_angle_init    = [0; pi/8; 0];
 
 assignin(dSection, 'm_mass', m_mass);
@@ -46,12 +46,12 @@ dSection=getSection(dictObj, 'Design Data');
 
 Control_phasing_power_threshold     = 22e-4;
 Phasing_switch                      = 0;% 0 for deactivated; 1 for activated.
-Control_switch                      = 2;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
-Pure_Pursuit_Z_Gain                 = 3000;% Only for Pure Pursuit. Ref 1400
+Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
+Pure_Pursuit_Z_Gain                 = 3000;% Only for Pure Pursuit.
 Pure_Pursuit_Y_Gain                 = 0;% Only for Pure Pursuit.
 Pure_Pursuit_Centered_angle_Z       = 0;% Only for Pure Pursuit.
-Ref_speed                           = 150;% Only for Proportional Guidance.
-Nav_constant                        = 1.8;% Only for Proportional Guidance without Dynamic Navigation constant.
+Ref_speed                           = 180;% Only for Proportional Guidance.
+Nav_constant                        = 1.5;% Only for Proportional Guidance without Dynamic Navigation constant.
 Dynamic_Navigation_constant         = 0;% Only for Proportional Guidance: 0 for deactivated; 1 for activated.
 Dynamic_Nav_Gain                    = 0.40;% Only for Proportional Guidance with Dynamic Navigation constant.
 Control_saturation_power_threshold  = 0.2;
@@ -77,7 +77,7 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Seeker_detect_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-s_fov                        = pi/18;
+s_fov                        = pi*1/18;
 s_aperture_diameter          = 0.06;
 s_efficiency                 = 0.85;
 s_energy_threshold           = 2.5e-4;
@@ -108,9 +108,9 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [4200,0,200];
+t_geo        = [2500,0,1];
 t_rotation   = 0;
-t_velocity   = [20;0;0];
+t_velocity   = [0;0;0];
 t_size       = [4,2,2];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
