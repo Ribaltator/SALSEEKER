@@ -4,8 +4,8 @@ clear all
 dictObj     = Simulink.data.dictionary.open('Environment_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-e_vel_wind      = 0;
-e_theta_wind    = 90;
+e_vel_wind      = 5;
+e_theta_wind    = 0;
 
 assignin(dSection, 'e_vel_wind', e_vel_wind);
 assignin(dSection, 'e_theta_wind', e_theta_wind);
@@ -16,10 +16,10 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Aerodynamic_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-a_coef_body     = [0.2 0 0 0 0 0];
+a_coef_drag     = 0.2;
 a_surface_ref   = pi*0.1^2;
 
-assignin(dSection, 'a_coef_body', a_coef_body);
+assignin(dSection, 'a_coef_drag', a_coef_drag);
 assignin(dSection, 'a_surface_ref', a_surface_ref);
 saveChanges(dictObj);
 
