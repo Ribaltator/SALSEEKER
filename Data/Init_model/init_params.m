@@ -45,13 +45,13 @@ dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
 Control_phasing_power_threshold     = 22e-4;
-Phasing_switch                      = 0;% 0 for deactivated; 1 for activated.
+Phasing_switch                      = 1;% 0 for deactivated; 1 for activated.
 Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
 Pure_Pursuit_Z_Gain                 = 3000;% Only for Pure Pursuit.
 Pure_Pursuit_Y_Gain                 = 0;% Only for Pure Pursuit.
 Pure_Pursuit_Centered_angle_Z       = 0;% Only for Pure Pursuit.
 Ref_speed                           = 180;% Only for Proportional Guidance.
-Nav_constant                        = 1.5;% Only for Proportional Guidance without Dynamic Navigation constant.
+Nav_constant                        = 1;% Only for Proportional Guidance without Dynamic Navigation constant.
 Dynamic_Navigation_constant         = 0;% Only for Proportional Guidance: 0 for deactivated; 1 for activated.
 Dynamic_Nav_Gain                    = 0.40;% Only for Proportional Guidance with Dynamic Navigation constant.
 Control_saturation_power_threshold  = 0.2;
