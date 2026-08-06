@@ -44,14 +44,14 @@ saveChanges(dictObj);
 dictObj=Simulink.data.dictionary.open('Control_data.sldd');
 dSection=getSection(dictObj, 'Design Data');
 
-Control_phasing_power_threshold     = 22e-4;
+Control_phasing_power_threshold     = 6e-4;
 Phasing_switch                      = 0;% 0 for deactivated; 1 for activated.
-Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
+Control_switch                      = 2;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
 Pure_Pursuit_Z_Gain                 = 4000;% Only for Pure Pursuit.
 Pure_Pursuit_Y_Gain                 = 0;% Only for Pure Pursuit.
-Pure_Pursuit_Centered_angle_Z       = 0.087;% Only for Pure Pursuit.
-Ref_speed                           = 250;% Only for Proportional Guidance.
-Nav_constant                        = 3;% Only for Proportional Guidance without Dynamic Navigation constant.
+Pure_Pursuit_Centered_angle_Z       = 0;% Only for Pure Pursuit.
+Ref_speed                           = 190;% Only for Proportional Guidance.
+Nav_constant                        = 1.8;% Only for Proportional Guidance without Dynamic Navigation constant.
 Dynamic_Navigation_constant         = 0;% Only for Proportional Guidance: 0 for deactivated; 1 for activated.
 Dynamic_Nav_Gain                    = 0.40;% Only for Proportional Guidance with Dynamic Navigation constant.
 Control_saturation_power_threshold  = 0.2;
@@ -108,9 +108,9 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [4200;0;1.15];
+t_geo        = [5000;0;1.15];
 t_rotation   = 0;
-t_velocity   = [20;0;0];
+t_velocity   = [0;0;0];
 t_size       = [2.3,6.4,2.3];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
