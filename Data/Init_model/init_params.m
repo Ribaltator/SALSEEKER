@@ -46,14 +46,15 @@ dSection=getSection(dictObj, 'Design Data');
 
 Control_phasing_power_threshold     = 6e-4;
 Phasing_switch                      = 0;% 0 for deactivated; 1 for activated.
-Control_switch                      = 2;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Guidance.
+Control_switch                      = 1;% 0 for No control; 1 for Pure Pursuit; 2 for Proportional Navigation.
 Pure_Pursuit_Z_Gain                 = 4000;% Only for Pure Pursuit.
 Pure_Pursuit_Y_Gain                 = 0;% Only for Pure Pursuit.
 Pure_Pursuit_Centered_angle_Z       = 0;% Only for Pure Pursuit.
-Ref_speed                           = 190;% Only for Proportional Guidance.
-Nav_constant                        = 1.8;% Only for Proportional Guidance without Dynamic Navigation constant.
+Ref_speed_Y                         = 0;% Only for Proportional Guidance.
+Ref_speed_Z                         = 190;% Only for Proportional Guidance.
+Nav_constant                        = 0.4;% Only for Proportional Guidance without Dynamic Navigation constant.
 Dynamic_Navigation_constant         = 0;% Only for Proportional Guidance: 0 for deactivated; 1 for activated.
-Dynamic_Nav_Gain                    = 0.40;% Only for Proportional Guidance with Dynamic Navigation constant.
+Dynamic_Nav_Gain                    = 0.04;% Only for Proportional Guidance with Dynamic Navigation constant.
 Control_saturation_power_threshold  = 0.2;
 Control_Force_Limit                 = 2000;
 
@@ -63,7 +64,8 @@ assignin(dSection, 'Control_switch', Control_switch);
 assignin(dSection, 'Pure_Pursuit_Z_Gain', Pure_Pursuit_Z_Gain);
 assignin(dSection, 'Pure_Pursuit_Y_Gain', Pure_Pursuit_Y_Gain);
 assignin(dSection, 'Pure_Pursuit_Centered_angle_Z', Pure_Pursuit_Centered_angle_Z);
-assignin(dSection, 'Ref_speed', Ref_speed);
+assignin(dSection, 'Ref_speed_Y', Ref_speed_Y);
+assignin(dSection, 'Ref_speed_Z', Ref_speed_Z);
 assignin(dSection, 'Nav_constant', Nav_constant);
 assignin(dSection, 'Dynamic_Navigation_constant', Dynamic_Navigation_constant);
 assignin(dSection, 'Dynamic_Nav_Gain', Dynamic_Nav_Gain);
@@ -108,9 +110,9 @@ saveChanges(dictObj);
 dictObj     = Simulink.data.dictionary.open('Target_Sim_data.sldd');
 dSection    = getSection(dictObj, 'Design Data');
 
-t_geo        = [5000;0;1.15];
+t_geo        = [4500;0;1.15];
 t_rotation   = 0;
-t_velocity   = [0;0;0];
+t_velocity   = [20;0;0];
 t_size       = [2.3,6.4,2.3];
 t_reflect    = [0.4 0.4 0.4 0.4 0.4 0.4];
 
